@@ -24,20 +24,34 @@ const getData = async (url, method) => {
 /* HOME MODULES
  *******************************************************************************/
 const displayWorks = async () => {
-  const works = await getData(WORKS_ENDPOINT, GET_HTTP_VERB);
-  console.log(works);
+  const galleryContainer = document.getElementById("gallery-container");
+  const works = await getData(API_BASE_URL + "/works", "GET");
+
+  works.forEach((work) => {
+    const figure = document.createElement("figure");
+    const figcaption = document.createElement("figcaption");
+    const image = document.createElement("img");
+
+    image.src = work.imageUrl;
+    figcaption.textContent = work.title;
+
+    figure.appendChild(image);
+    figure.appendChild(figcaption);
+
+    galleryContainer.appendChild(figure);
+  });
 };
 
 /* LOGIN MODULES
  *******************************************************************************/
-const loginUser = () => {
+function loginUser() {
   console.log("login");
-};
+}
 
 /* ENTRY POINT
  *******************************************************************************/
 const main = async () => {
-  displayWorks();
+  await displayWorks();
 };
 
 main();
