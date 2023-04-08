@@ -20,13 +20,7 @@ const getData = async (url, method) => {
     console.error(e);
   }
 };
-/**FILTERS**************************************************************** */
-  button.addEventListener("click", async () => {
-   let apiUrl = API_BASE_URL + "/works";
-    if (name !== "Tous") {
-      apiUrl += `?type=${name}`;
-    }
-    const works = await getData(apiUrl, "GET");
+
 /* HOME MODULES
  *******************************************************************************/
 const displayWorks = async () => {
@@ -48,6 +42,16 @@ const displayWorks = async () => {
   });
 };
 
+const initFilters = () => {
+  document.getElementById("all").addEventListener("click", () => {});
+
+  document.getElementById("objects").addEventListener("click", () => {});
+  document.getElementById("apartments").addEventListener("click", () => {});
+  document
+    .getElementById("hostelApartments")
+    .addEventListener("click", () => {});
+};
+
 /* LOGIN MODULES
  *******************************************************************************/
 function loginUser() {
@@ -57,6 +61,9 @@ function loginUser() {
 /* ENTRY POINT
  *******************************************************************************/
 const main = async () => {
+  // Initialize works filter buttons
+  initFilters();
+
   await displayWorks();
 };
 

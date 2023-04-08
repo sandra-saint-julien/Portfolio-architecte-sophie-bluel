@@ -105,37 +105,19 @@ nav,
 section {
   display: block;
 }
-#button-container {
-  margin-left: 350px;
+#buttonContainer {
+  margin-left: 300px;
   margin-bottom: 50px;
-  margin-top:70px
-  font-family: "Work Sans", sans-serif;
-  ;
+  margin-top: 50px;
 }
-#All {
+
+.filter-button {
+  padding: 10px 15px;
   border-radius: 20px;
-  width: 80px;
-  height: 30px;
   border: 1px solid #1d6154;
+  font-family: "Syne";
 }
-#Object {
-  border-radius: 20px;
-  width: 80px;
-  height: 30px;
-  border: 1px solid #1d6154;
-}
-#House {
-  border-radius: 20px;
-  width: 120px;
-  height: 30px;
-  border: 1px solid #1d6154;
-}
-#Hostels and food {
-  border-radius: 20px;
-  width: 30px;
-  height: 170px;
-  border: 1px solid #1d6154;
-}
+
 button:hover {
   background-color: #1d6154;
   color: white;
