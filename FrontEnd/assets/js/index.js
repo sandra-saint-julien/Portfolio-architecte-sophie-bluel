@@ -20,7 +20,13 @@ const getData = async (url, method) => {
     console.error(e);
   }
 };
-
+/**FILTERS**************************************************************** */
+  button.addEventListener("click", async () => {
+   let apiUrl = API_BASE_URL + "/works";
+    if (name !== "Tous") {
+      apiUrl += `?type=${name}`;
+    }
+    const works = await getData(apiUrl, "GET");
 /* HOME MODULES
  *******************************************************************************/
 const displayWorks = async () => {
