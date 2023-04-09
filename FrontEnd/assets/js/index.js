@@ -7,6 +7,11 @@ const DELETE_HTTP_VERB = "DELETE";
 const API_BASE_URL = "http://localhost:5678/api";
 const WORKS_ENDPOINT = API_BASE_URL + "/works";
 
+const WORK_ALL_CATEGORY = 0;
+const WORK_OBJECT_CATEGORY = 1;
+const WORK_APARTMENTS_CATEGORY = 2;
+const WORK_HOSTELS_APARTMENTS_CATEGORY = 3;
+
 /* UTILS
  *******************************************************************************/
 const getData = async (url, method) => {
@@ -23,33 +28,59 @@ const getData = async (url, method) => {
 
 /* HOME MODULES
  *******************************************************************************/
-const displayWorks = async () => {
-  const galleryContainer = document.getElementById("gallery-container");
-  const works = await getData(API_BASE_URL + "/works", "GET");
+const displayWorks = async (filter) => {
+  const works = await getData(WORKS_ENDPOINT, "GET");
 
-  works.forEach((work) => {
-    const figure = document.createElement("figure");
-    const figcaption = document.createElement("figcaption");
-    const image = document.createElement("img");
+  // Display work gallery oly if work there is works in the database
+  if (works?.length) {
+    const filteredWorks =
+      filter === 0
+        ? works
+        : works.filter((work) => {
+            return work.categoryId === filter;
+          });
 
-    image.src = work.imageUrl;
-    figcaption.textContent = work.title;
+    const galleryContainer = document.getElementById("gallery-container");
 
-    figure.appendChild(image);
-    figure.appendChild(figcaption);
+    // Delete gallery after fill the new gallery
+    while (galleryContainer.firstChild) {
+      galleryContainer.removeChild(galleryContainer.firstChild);
+    }
+    filteredWorks.forEach((work) => {
+      const figure = document.createElement("figure");
+      const figcaption = document.createElement("figcaption");
+      const image = document.createElement("img");
 
-    galleryContainer.appendChild(figure);
-  });
+      image.src = work.imageUrl;
+      figcaption.textContent = work.title;
+
+      figure.appendChild(image);
+      figure.appendChild(figcaption);
+
+      galleryContainer.appendChild(figure);
+    });
+  }
 };
 
-const initFilters = () => {
-  document.getElementById("all").addEventListener("click", () => {});
+const initFilters = async () => {
+  // Get all works on first render
+  await displayWorks(WORK_ALL_CATEGORY);
 
-  document.getElementById("objects").addEventListener("click", () => {});
-  document.getElementById("apartments").addEventListener("click", () => {});
-  document
-    .getElementById("hostelApartments")
-    .addEventListener("click", () => {});
+  document.getElementById("all").addEventListener("click", () => {
+    displayWorks(WORK_ALL_CATEGORY);
+  });
+
+  document.getElementById("objects").addEventListener("click", () => {
+    displayWorks(WORK_OBJECT_CATEGORY);
+  });
+
+  document.getElementById("apartments").addEventListener("click", () => {
+    displayWorks(WORK_APARTMENTS_CATEGORY);
+  });
+
+  document.getElementById("hostel-apartments").addEventListener("click", () => {
+    displayWorks(WORK_HOSTELS_APARTMENTS_CATEGORY);
+  });
 };
 
 /* LOGIN MODULES
@@ -62,9 +93,9 @@ function loginUser() {
  *******************************************************************************/
 const main = async () => {
   // Initialize works filter buttons
-  initFilters();
-
-  await displayWorks();
+  await initFilters();
 };
 
-main();
+document.addEventListener("DOMContentLoaded", () => {
+  main();
+});
