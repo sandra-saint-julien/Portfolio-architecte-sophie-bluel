@@ -6,6 +6,7 @@ const DELETE_HTTP_VERB = "DELETE";
 
 const API_BASE_URL = "http://localhost:5678/api";
 const WORKS_ENDPOINT = API_BASE_URL + "/works";
+const LOGIN_ENDPOINT = API_BASE_URL + "/user/login";
 
 const WORK_ALL_CATEGORY = 0;
 const WORK_OBJECT_CATEGORY = 1;
@@ -82,20 +83,46 @@ const initFilters = async () => {
     displayWorks(WORK_HOSTELS_APARTMENTS_CATEGORY);
   });
 };
+/* CONTACT
+ **************************************************************************/
+
+const contact = () => {
+  document.getElementById("contact").addEventListener("click", () => {
+    const scrollHeight = document.documentElement.scrollHeight;
+    window.scrollTo({
+      top: scrollHeight,
+      behavior: "smooth",
+    });
+  });
+};
 
 /* LOGIN MODULES
  *******************************************************************************/
-function loginUser() {
-  console.log("login");
-}
+const loginUser = async () => {
+  try {
+    const response = await fetch(LOGIN_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: "example",
+        password: "password",
+      }),
+    });
+
+    return response.json();
+  } catch (e) {
+    console.error(e);
+  }
+};
 
 /* ENTRY POINT
  *******************************************************************************/
 const main = async () => {
   // Initialize works filter buttons
   await initFilters();
+  await loginUser();
+  contact();
 };
-
-document.addEventListener("DOMContentLoaded", () => {
-  main();
-});
+main();
