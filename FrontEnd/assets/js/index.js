@@ -83,46 +83,12 @@ const initFilters = async () => {
     displayWorks(WORK_HOSTELS_APARTMENTS_CATEGORY);
   });
 };
-/* CONTACT
- **************************************************************************/
-
-const contact = () => {
-  document.getElementById("contact").addEventListener("click", () => {
-    const scrollHeight = document.documentElement.scrollHeight;
-    window.scrollTo({
-      top: scrollHeight,
-      behavior: "smooth",
-    });
-  });
-};
-
-/* LOGIN MODULES
- *******************************************************************************/
-const loginUser = async () => {
-  try {
-    const response = await fetch(LOGIN_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: "example",
-        password: "password",
-      }),
-    });
-
-    return response.json();
-  } catch (e) {
-    console.error(e);
-  }
-};
 
 /* ENTRY POINT
  *******************************************************************************/
 const main = async () => {
   // Initialize works filter buttons
   await initFilters();
-  await loginUser();
-  contact();
 };
+
 main();

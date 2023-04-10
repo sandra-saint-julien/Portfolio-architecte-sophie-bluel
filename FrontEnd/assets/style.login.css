@@ -1,0 +1,68 @@
+.container-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+#loginUser h2 {
+  text-align: center;
+}
+#loginUser {
+  min-width: 500px;
+}
+
+input[type="submit"] {
+  display: flex;
+  font-family: "Syne";
+  font-weight: 700;
+  color: white;
+  background-color: #1d6154;
+  margin: 2em auto;
+  width: 180px;
+  text-align: center;
+  border-radius: 60px;
+}
+
+form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="password"] {
+  font-family: "Syne";
+  width: 100%;
+  padding: 10px;
+  border: 1px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+a {
+  display: block;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #1d6154;
+}
+
+input[type="submit"] {
+  font-family: "Syne";
+  background-color: #1d6154;
+  color: white;
+  padding: 20px 20px;
+  border: 1px;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+  font-size: 17px;
+  justify-content: center;
+}

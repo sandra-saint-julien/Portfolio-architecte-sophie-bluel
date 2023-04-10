@@ -2,7 +2,6 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-
 html,
 body,
 div,
@@ -92,6 +91,10 @@ video {
   vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
+html,
+body {
+  scroll-behavior: smooth;
+}
 article,
 aside,
 details,
@@ -232,6 +235,7 @@ li:hover {
 .gallery img {
   width: 100%;
 }
+
 #contact {
   width: 50%;
   margin: auto;
@@ -254,18 +258,9 @@ li:hover {
   font-size: 1.2em;
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+  font-size: 17px;
+  justify-content: center;
 }
-#contact label {
-  margin: 2em 0 1em 0;
-}
-#contact textarea {
-  border: none;
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-}
-#loginUser h2 {
-  text-align: center;
-}
-
 input[type="submit"] {
   font-family: "Syne";
   font-weight: 700;
@@ -276,48 +271,12 @@ input[type="submit"] {
   text-align: center;
   border-radius: 60px;
 }
-
-form {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  border-radius: 10px;
+#contact label {
+  margin: 2em 0 1em 0;
 }
-
-label {
-  display: block;
-  margin-bottom: 10px;
-}
-
-input[type="text"],
-input[type="password"] {
-  font-family: "Syne";
-  width: 100%;
-  padding: 10px;
-  border: 1px;
-  border-radius: 5px;
-  box-sizing: border-box;
-  margin-bottom: 20px;
+#contact textarea {
+  border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-}
-
-a {
-  display: block;
-  margin-bottom: 20px;
-  text-align: center;
-  color: #1d6154;
-}
-
-input[type="submit"] {
-  font-family: "Syne";
-  background-color: #1d6154;
-  color: white;
-  padding: 20px 20px;
-  border: 1px;
-  border-radius: 5px;
-  cursor: pointer;
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-  font-size: 17px;
 }
 
 footer nav ul {
