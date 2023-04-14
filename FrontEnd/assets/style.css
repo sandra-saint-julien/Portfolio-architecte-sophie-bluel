@@ -317,3 +317,126 @@ footer nav ul {
   justify-content: flex-end;
   margin: 2em;
 }
+
+#edit-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: white;
+  width: 600px;
+}
+
+#gallery-edit {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 30px 20px;
+}
+
+.photos-gallery {
+  font-size: 26px;
+  font-family: "Syne";
+  margin-bottom: 10px;
+  margin-top: 0;
+}
+
+.filter {
+  position: relative;
+}
+
+.filter img {
+  width: 90px;
+  height: 120px;
+  padding: 3px;
+}
+
+.part {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+}
+
+.edit {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  background-color: white;
+}
+
+#edit-text {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+}
+
+.add {
+  width: 300px;
+  height: 30px;
+  font-family: "Syne";
+  font-size: 15px;
+  border-radius: 20px;
+  background-color: #1d6154;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.delete {
+  border: none;
+  background-color: white;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 20px;
+  font-size: 20px;
+  border-radius: 20px;
+}
+
+.delete:hover {
+  background-color: transparent;
+  color: black;
+}
+
+.regular {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: black;
+  color: white;
+  margin-top: 7px;
+  margin-right: 7px;
+  border-radius: 5px;
+}
+
+.regular:hover {
+  background-color: black;
+}
+
+.line {
+  margin-bottom: 50px;
+  width: 490px;
+  height: 1px;
+  background-color: gray;
+}
+
+.delete-gallery {
+  font-family: "Syne";
+  font-size: 14px;
+  color: red;
+  margin-left: 65px;
+  margin-top: 23px;
+  border: none;
+  background-color: white;
+}
+
+.delete-gallery:hover {
+  background-color: transparent;
+  color: red;
+}

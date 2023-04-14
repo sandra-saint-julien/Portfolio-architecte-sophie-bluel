@@ -26,6 +26,8 @@ const getApiData = async (url, method) => {
   }
 };
 
+const userIsConnected = () => localStorage.getItem("accessToken");
+
 /* HOME */
 const displayWorks = async (category) => {
   const works = await getApiData(ENDPOINTS.WORKS, HTTP_VERB.GET);
@@ -76,6 +78,11 @@ const initFiltersModule = async () => {
   });
 };
 
+const galleryEditionModule = () => {
+  if (userIsConnected()) {
+  }
+};
+
 /* AUTH */
 const checkLoginModule = () => {
   const filterButtonContainer = document.getElementById("buttonContainer");
@@ -83,9 +90,7 @@ const checkLoginModule = () => {
   const logoutButton = document.getElementById("logout");
   const changeButton = document.getElementById("change");
 
-  const userIsConnected = localStorage.getItem("accessToken");
-
-  if (userIsConnected) {
+  if (userIsConnected()) {
     loginButton.style.display = "none";
     logoutButton.style.display = "block";
     changeButton.style.display = "block";
@@ -143,11 +148,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   switch (window.location.pathname) {
     case "/FrontEnd/":
     case "/FrontEnd/index.html":
+      await initFiltersModule();
+
       checkLoginModule();
 
       logoutModule();
 
-      await initFiltersModule();
+      galleryEditionModule();
+
       break;
 
     case "/FrontEnd/login.html":
