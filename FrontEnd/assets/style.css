@@ -224,6 +224,9 @@ li:hover {
   text-align: center;
   margin-bottom: 1em;
 }
+.fal {
+  color: black;
+}
 .gallery {
   width: 100%;
   display: grid;
@@ -231,7 +234,37 @@ li:hover {
   grid-column-gap: 20px;
   grid-row-gap: 20px;
 }
+#changed {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+}
 
+#renamed {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#rename {
+  border: none;
+  font-family: "Syne";
+  background-color: transparent;
+  color: black;
+  font-size: 17px;
+  margin-left: 90px;
+  margin-top: 10px;
+}
+
+#change {
+  border: none;
+  font-family: "Syne";
+  color: black;
+  background-color: transparent;
+  font-size: 17px;
+  margin-left: 15px;
+}
 .gallery img {
   width: 100%;
 }

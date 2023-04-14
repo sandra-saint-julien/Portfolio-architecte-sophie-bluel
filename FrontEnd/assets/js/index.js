@@ -1,52 +1,47 @@
-/* CONSTANTS
- *******************************************************************************/
-const GET_HTTP_VERB = "GET";
-const POST_HTTP_VERB = "POST";
-const DELETE_HTTP_VERB = "DELETE";
-
+/* CONSTANTS */
+const HTTP_VERB = {
+  GET: "GET",
+  POST: "POST",
+  DELETE: "DELETE",
+};
 const API_BASE_URL = "http://localhost:5678/api";
-const WORKS_ENDPOINT = API_BASE_URL + "/works";
-const LOGIN_ENDPOINT = API_BASE_URL + "/user/login";
+const ENDPOINTS = {
+  WORKS: `${API_BASE_URL}/works`,
+  LOGIN: `${API_BASE_URL}/users/login`,
+};
+const WORK_CATEGORY = {
+  ALL: 0,
+  OBJECT: 1,
+  APARTMENTS: 2,
+  HOSTELS_APARTMENTS: 3,
+};
 
-const WORK_ALL_CATEGORY = 0;
-const WORK_OBJECT_CATEGORY = 1;
-const WORK_APARTMENTS_CATEGORY = 2;
-const WORK_HOSTELS_APARTMENTS_CATEGORY = 3;
-
-/* UTILS
- *******************************************************************************/
-const getData = async (url, method) => {
+/* UTILS */
+const getApiData = async (url, method) => {
   try {
-    const response = await fetch(url, {
-      method,
-    });
-
+    const response = await fetch(url, { method });
     return response.json();
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error(error);
   }
 };
 
-/* HOME MODULES
- *******************************************************************************/
-const displayWorks = async (filter) => {
-  const works = await getData(WORKS_ENDPOINT, "GET");
+/* HOME */
+const displayWorks = async (category) => {
+  const works = await getApiData(ENDPOINTS.WORKS, HTTP_VERB.GET);
 
-  // Display work gallery oly if work there is works in the database
   if (works?.length) {
     const filteredWorks =
-      filter === 0
+      category === WORK_CATEGORY.ALL
         ? works
-        : works.filter((work) => {
-            return work.categoryId === filter;
-          });
+        : works.filter((work) => work.categoryId === category);
 
     const galleryContainer = document.getElementById("gallery-container");
 
-    // Delete gallery after fill the new gallery
     while (galleryContainer.firstChild) {
       galleryContainer.removeChild(galleryContainer.firstChild);
     }
+
     filteredWorks.forEach((work) => {
       const figure = document.createElement("figure");
       const figcaption = document.createElement("figcaption");
@@ -54,41 +49,113 @@ const displayWorks = async (filter) => {
 
       image.src = work.imageUrl;
       figcaption.textContent = work.title;
-
       figure.appendChild(image);
       figure.appendChild(figcaption);
-
       galleryContainer.appendChild(figure);
     });
   }
 };
 
-const initFilters = async () => {
-  // Get all works on first render
-  await displayWorks(WORK_ALL_CATEGORY);
+const initFiltersModule = async () => {
+  await displayWorks(WORK_CATEGORY.ALL);
 
   document.getElementById("all").addEventListener("click", () => {
-    displayWorks(WORK_ALL_CATEGORY);
+    displayWorks(WORK_CATEGORY.ALL);
   });
 
   document.getElementById("objects").addEventListener("click", () => {
-    displayWorks(WORK_OBJECT_CATEGORY);
+    displayWorks(WORK_CATEGORY.OBJECT);
   });
 
   document.getElementById("apartments").addEventListener("click", () => {
-    displayWorks(WORK_APARTMENTS_CATEGORY);
+    displayWorks(WORK_CATEGORY.APARTMENTS);
   });
 
   document.getElementById("hostel-apartments").addEventListener("click", () => {
-    displayWorks(WORK_HOSTELS_APARTMENTS_CATEGORY);
+    displayWorks(WORK_CATEGORY.HOSTELS_APARTMENTS);
   });
 };
 
-/* ENTRY POINT
- *******************************************************************************/
-const main = async () => {
-  // Initialize works filter buttons
-  await initFilters();
+/* AUTH */
+const checkLoginModule = () => {
+  const filterButtonContainer = document.getElementById("buttonContainer");
+  const loginButton = document.getElementById("login");
+  const logoutButton = document.getElementById("logout");
+  const changeButton = document.getElementById("change");
+
+  const userIsConnected = localStorage.getItem("accessToken");
+
+  if (userIsConnected) {
+    loginButton.style.display = "none";
+    logoutButton.style.display = "block";
+    changeButton.style.display = "block";
+    filterButtonContainer.style.display = "none";
+  } else {
+    loginButton.style.display = "block";
+    logoutButton.style.display = "none";
+    changeButton.style.display = "none";
+    filterButtonContainer.style.display = "block";
+  }
 };
 
-main();
+const logoutModule = () => {
+  document.getElementById("logout").addEventListener("click", () => {
+    localStorage.removeItem("accessToken");
+
+    window.location.reload();
+  });
+};
+
+const loginModule = () => {
+  document.getElementById("login").addEventListener("click", async (event) => {
+    event.preventDefault();
+
+    const email = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    const response = await fetch(ENDPOINTS.LOGIN, {
+      method: HTTP_VERB.POST,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      const token = data.token;
+
+      localStorage.setItem("accessToken", token);
+
+      window.location.href = `http://${window.location.hostname}:5500/FrontEnd/index.html`;
+
+      console.log("Connexion réussie !");
+    } else {
+      const error = await response.json();
+
+      alert(error.message);
+    }
+  });
+};
+
+/* ENTRY POINT */
+document.addEventListener("DOMContentLoaded", async () => {
+  switch (window.location.pathname) {
+    case "/FrontEnd/":
+    case "/FrontEnd/index.html":
+      checkLoginModule();
+
+      logoutModule();
+
+      await initFiltersModule();
+      break;
+
+    case "/FrontEnd/login.html":
+      loginModule();
+      break;
+
+    default:
+      alert("404 This page doesn't exist");
+      break;
+  }
+});
