@@ -265,8 +265,9 @@ footer nav ul {
 #gallery-edit {
   position: relative;
   background-color: white;
-  width: 50vw;
+  width: 600px;
   padding: 70px;
+  border-radius: 10px;
 }
 
 .photos-gallery {
@@ -283,7 +284,6 @@ footer nav ul {
 
 .filter img {
   width: 100%;
-  padding: 3px;
 }
 
 .part {
@@ -303,6 +303,8 @@ footer nav ul {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 15px;
+  overflow: auto;
+  height: 450px;
 }
 
 .add {
@@ -329,6 +331,24 @@ footer nav ul {
   border-radius: 20px;
 }
 
+.close-modal-button:hover {
+  background-color: transparent;
+  color: black;
+}
+
+.close-modal-button-gallery {
+  color: red;
+  font-family: "Syne";
+  font-size: 14px;
+  border: none;
+  background-color: white;
+}
+
+.close-modal-button-gallery:hover {
+  background-color: transparent;
+  color: red;
+}
+
 #prev-step-gallery-button {
   position: absolute;
   left: 10px;
@@ -338,11 +358,6 @@ footer nav ul {
   padding: 20px;
   font-size: 20px;
   border-radius: 20px;
-}
-
-.close-modal-button :hover {
-  background-color: transparent;
-  color: black;
 }
 
 .regular {
@@ -373,7 +388,8 @@ footer nav ul {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
+  margin-top: 50px;
 }
 
 .close-modal-button -gallery {

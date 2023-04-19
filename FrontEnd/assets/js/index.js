@@ -75,7 +75,49 @@ const logoutModule = () => {
 };
 
 const displayWorksEditionCards = async () => {
-  /*
+  try {
+    const images = await getApiData(ENDPOINTS.WORKS, HTTP_VERB.GET);
+
+    const galleryEdition = document.getElementById("edit-text");
+
+    images.forEach((image) => {
+      const filterDiv = document.createElement("div");
+      filterDiv.classList.add("filter");
+
+      const imgElement = document.createElement("img");
+      imgElement.src = image.imageUrl;
+      imgElement.alt = image.title;
+
+      const deleteButton = document.createElement("button");
+      deleteButton.classList.add("regular");
+      deleteButton.innerHTML = '<i class="fa-regular fa-trash-can"></i>';
+      deleteButton.addEventListener("click", async () => {
+        try {
+          await fetch(`https://localhost:5678/api/images/${image._id}`, {
+            method: "DELETE",
+          });
+          filterDiv.remove();
+        } catch (error) {
+          console.error(error);
+        }
+      });
+
+      const editButton = document.createElement("button");
+      editButton.classList.add("edit");
+      editButton.textContent = "éditer";
+      editButton.addEventListener("click", () => {});
+
+      filterDiv.appendChild(imgElement);
+      filterDiv.appendChild(deleteButton);
+      filterDiv.appendChild(editButton);
+      galleryEdition.appendChild(filterDiv);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+/*
   <div class="filter">
     <img
       src="/FrontEnd/assets/images/abajour-tahina.png"
@@ -88,11 +130,10 @@ const displayWorksEditionCards = async () => {
     <button class="edit">éditer</button>
   </div>
   */
-  // 1 - Récupérer les données de l'API
-  // 2 - Recuperer le container
-  // 3 - Créer les éléments HTML
-  // 4 - Ajouter les éléments au container
-};
+// 1 - Récupérer les données de l'API
+// 2 - Recuperer le container
+// 3 - Créer les éléments HTML
+// 4 - Ajouter les éléments au container
 
 const showModalModule = () => {
   const modal = document.getElementById("modal");
@@ -157,4 +198,6 @@ document.addEventListener("DOMContentLoaded", () => {
   showModalModule();
 
   photoEditionModule();
+
+  displayWorksEditionCards();
 });
