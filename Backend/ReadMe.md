@@ -20,14 +20,3 @@ Lien pour voir la
 [documentation Swagger](http://localhost:5678/api-docs/)
 
 Pour lire la documentation, utiliser Chrome ou Firefox
-
-const logout = () => {
-localStorage.removeItem("accessToken");
-window.location.href = "index.html";
-};
-
-document.getElementById("logout").addEventListener("click", logout);
-
-const username = localStorage.getItem("username");
-const password = localStorage.getItem("password");
-if (token && username === "username" && password === "password")

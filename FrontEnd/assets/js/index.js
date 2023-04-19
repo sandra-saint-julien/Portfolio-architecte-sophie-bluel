@@ -1,34 +1,6 @@
-/* CONSTANTS */
-const HTTP_VERB = {
-  GET: "GET",
-  POST: "POST",
-  DELETE: "DELETE",
-};
-const API_BASE_URL = "http://localhost:5678/api";
-const ENDPOINTS = {
-  WORKS: `${API_BASE_URL}/works`,
-  LOGIN: `${API_BASE_URL}/users/login`,
-};
-const WORK_CATEGORY = {
-  ALL: 0,
-  OBJECT: 1,
-  APARTMENTS: 2,
-  HOSTELS_APARTMENTS: 3,
-};
-
-/* UTILS */
-const getApiData = async (url, method) => {
-  try {
-    const response = await fetch(url, { method });
-    return response.json();
-  } catch (error) {
-    console.error(error);
-  }
-};
-
+/* HOME */
 const userIsConnected = () => localStorage.getItem("accessToken");
 
-/* HOME */
 const displayWorks = async (category) => {
   const works = await getApiData(ENDPOINTS.WORKS, HTTP_VERB.GET);
 
@@ -78,92 +50,33 @@ const initFiltersModule = async () => {
   });
 };
 
-const galleryEditionModule = () => {
-  if (userIsConnected()) {
-  }
-};
-
-/* AUTH */
 const checkLoginModule = () => {
-  const filterButtonContainer = document.getElementById("buttonContainer");
+  const user = userIsConnected();
   const loginButton = document.getElementById("login");
-  const logoutButton = document.getElementById("logout");
-  const changeButton = document.getElementById("change");
 
-  if (userIsConnected()) {
-    loginButton.style.display = "none";
-    logoutButton.style.display = "block";
-    changeButton.style.display = "block";
-    filterButtonContainer.style.display = "none";
-  } else {
-    loginButton.style.display = "block";
-    logoutButton.style.display = "none";
-    changeButton.style.display = "none";
-    filterButtonContainer.style.display = "block";
-  }
+  if (user) loginButton.remove();
+
+  const loggedUserUiElements = document.querySelectorAll(
+    ".logged-user-elements"
+  );
+
+  loggedUserUiElements.forEach((element) => {
+    element.style.display = user ? "block" : "none";
+  });
 };
 
 const logoutModule = () => {
-  document.getElementById("logout").addEventListener("click", () => {
+  const logoutButton = document.getElementById("logout");
+
+  logoutButton.addEventListener("click", () => {
     localStorage.removeItem("accessToken");
-
-    window.location.reload();
   });
 };
 
-const loginModule = () => {
-  document.getElementById("login").addEventListener("click", async (event) => {
-    event.preventDefault();
+document.addEventListener("DOMContentLoaded", () => {
+  initFiltersModule();
 
-    const email = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+  checkLoginModule();
 
-    const response = await fetch(ENDPOINTS.LOGIN, {
-      method: HTTP_VERB.POST,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      const token = data.token;
-
-      localStorage.setItem("accessToken", token);
-
-      window.location.href = `http://${window.location.hostname}:5500/FrontEnd/index.html`;
-
-      console.log("Connexion réussie !");
-    } else {
-      const error = await response.json();
-
-      alert(error.message);
-    }
-  });
-};
-
-/* ENTRY POINT */
-document.addEventListener("DOMContentLoaded", async () => {
-  switch (window.location.pathname) {
-    case "/FrontEnd/":
-    case "/FrontEnd/index.html":
-      await initFiltersModule();
-
-      checkLoginModule();
-
-      logoutModule();
-
-      galleryEditionModule();
-
-      break;
-
-    case "/FrontEnd/login.html":
-      loginModule();
-      break;
-
-    default:
-      alert("404 This page doesn't exist");
-      break;
-  }
+  logoutModule();
 });
