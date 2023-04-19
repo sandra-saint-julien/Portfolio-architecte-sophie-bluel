@@ -31,11 +31,11 @@
         <ul>
           <li><a>projets</a></li>
           <li><a href="#contact">contact</a></li>
-          <li><a href="login.html" id="login">login</a></li>
           <li>
-            <a href="index.html" id="logout" class="logged-user-elements"
-              >logout</a
-            >
+            <a href="login.html" id="login" class="public-elements">login</a>
+          </li>
+          <li>
+            <a href="index.html" id="logout" class="logged-elements">logout</a>
           </li>
           <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
         </ul>
@@ -47,7 +47,7 @@
         <figure>
           <img src="./assets/images/sophie-bluel.png" alt="" />
           <div id="renamed">
-            <button class="rename logged-user-elements" type="button">
+            <button class="rename logged-elements" type="button">
               <i class="fa-solid fa-pen-to-square"></i>
               modifier
             </button>
@@ -78,14 +78,14 @@
         <h2>Mes Projets</h2>
 
         <div id="changed">
-          <button id="del" type="button" class="logged-user-elements">
+          <button id="modal-button" type="button" class="logged-elements">
             <i class="fa-solid fa-pen-to-square"></i>
 
             modifier
           </button>
         </div>
 
-        <div id="buttonContainer">
+        <div id="button-container" class="public-elements">
           <button class="filter-button" id="all">Tous</button>
           <button class="filter-button" id="objects">Objets</button>
           <button class="filter-button" id="apartments">Appartements</button>
@@ -122,175 +122,54 @@
       </nav>
     </footer>
 
-    <!-------------------------FIRST MODAL ------------------------------->
-    <div id="modal" class="logged-user-elements">
-      <article id="gallery-edit">
-        <header class="photos-gallery">
-          <h3>Galerie photo</h3>
-          <button class="delete">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </header>
+    <div id="modal">
+      <div id="modal-wrapper">
+        <article id="gallery-edit">
+          <!------------------------- GALLERY ------------------------------->
+          <section id="gallery-edition">
+            <header class="photos-gallery">
+              <h3>Galerie photo</h3>
 
-        <section id="part">
-          <div id="edit-text">
-            <div class="filter">
-              <img src="/FrontEnd/assets/images/abajour-tahina.png" alt="" />
-              <button class="regular">
-                <i class="fa-regular fa-trash-can"></i>
+              <button class="close-modal-button">
+                <i class="fa-solid fa-xmark"></i>
               </button>
-              <button class="edit">éditer</button>
+            </header>
+
+            <div id="part">
+              <div id="edit-text"></div>
             </div>
 
-            <div class="filter">
-              <img
-                src="/FrontEnd/assets/images/appartement-paris-v.png"
-                alt=""
-              />
-              <button class="regular">
-                <i class="fa-regular fa-trash-can"></i>
-              </button>
-              <button class="edit">éditer</button>
-            </div>
+            <div class="line"></div>
 
-            <div class="filter">
-              <img
-                src="/FrontEnd/assets/images/appartement-paris-x.png"
-                alt=""
-              />
-              <button class="regular">
-                <i class="fa-regular fa-trash-can"> </i>
-              </button>
-              <button class="edit">éditer</button>
-            </div>
+            <footer>
+              <div id="modal-add">
+                <button class="add" id="add-photo-button">
+                  Ajouter une photo
+                </button>
 
-            <div class="filter">
-              <img
-                src="/FrontEnd/assets/images/appartement-paris-xviii.png"
-                alt=""
-              />
-              <button class="regular">
-                <i class="fa-regular fa-trash-can"></i>
+                <button class="close-modal-button-gallery">
+                  Supprimer la galerie
+                </button>
+              </div>
+            </footer>
+          </section>
+
+          <!--------------------------- EDITION ----------------------------->
+          <section id="photo-add">
+            <header class="photos-gallery">
+              <h3>Galerie photo</h3>
+
+              <button class="close-modal-button">
+                <i class="fa-solid fa-xmark"></i>
               </button>
 
-              <button class="edit">éditer</button>
-            </div>
-
-            <div class="filter">
-              <img src="/FrontEnd/assets/images/bar-lullaby-paris.png" alt="" />
-              <button class="regular">
-                <i class="fa-regular fa-trash-can"></i>
+              <button id="prev-step-gallery-button">
+                <i class="fa-solid fa-xmark"></i>
               </button>
-
-              <button class="edit">éditer</button>
-            </div>
-          </div>
-
-          <div id="edit-text">
-            <div class="filter">
-              <img
-                src="/FrontEnd/assets/images/hotel-first-arte-new-delhi.png"
-                alt=""
-              />
-              <button class="regular">
-                <i class="fa-regular fa-trash-can"></i>
-              </button>
-
-              <button class="edit">éditer</button>
-            </div>
-
-            <div class="filter">
-              <img src="/FrontEnd/assets/images/la-balisiere.png" alt="" />
-              <button class="regular">
-                <i class="fa-regular fa-trash-can"></i>
-              </button>
-
-              <button class="edit">éditer</button>
-            </div>
-
-            <div class="filter">
-              <img src="/FrontEnd/assets/images/le-coteau-cassis.png" alt="" />
-              <button class="regular">
-                <i class="fa-regular fa-trash-can"></i>
-              </button>
-
-              <button class="edit">éditer</button>
-            </div>
-
-            <div class="filter">
-              <img
-                src="/FrontEnd/assets/images/restaurant-sushisen-londres.png"
-                alt=""
-              />
-              <button class="regular">
-                <i class="fa-regular fa-trash-can"></i>
-              </button>
-
-              <button class="edit">éditer</button>
-            </div>
-
-            <div class="filter">
-              <img
-                src="/FrontEnd/assets/images/structures-thermopolis.png"
-                alt=""
-              />
-              <button class="regular">
-                <i class="fa-regular fa-trash-can"></i>
-              </button>
-
-              <button class="edit">éditer</button>
-            </div>
-          </div>
-
-          <div id="edit-text">
-            <div class="filter">
-              <img src="/FrontEnd/assets/images/villa-ferneze.png" alt="" />
-
-              <button class="regular">
-                <i class="fa-regular fa-trash-can"></i>
-              </button>
-              <button class="edit">éditer</button>
-            </div>
-          </div>
-        </section>
-
-        <div class="line"></div>
-
-        <footer>
-          <div id="modal-add">
-            <button class="add">Ajouter une photo</button>
-            <button class="delete-gallery">Supprimer la galerie</button>
-          </div>
-        </footer>
-
-        <!--------------------------- SECOND MODAL ----------------------------->
-        <div div id="photo-add">
-          <div id="open-modal" style="display: none">Ajouter une photo</div>
-
-          <div id="add-photo" class="add">
-            <div class="modal-content">
-              <span class="close">&times;</span>
-              <h2>Ajouter une photo</h2>
-              <form>
-                <label for="photo">Glissez-déposez votre photo :</label>
-                <input type="file" id="photo" name="photo" accept="image/*" />
-
-                <label for="title">Titre :</label>
-                <input type="text" id="title" name="title" required />
-
-                <label for="category">Catégorie :</label>
-                <select id="category" name="category"></select>
-              </form>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <footer>
-            <button type="submit">Valider</button>
-          </footer>
-        </div>
-      </article>
+            </header>
+          </section>
+        </article>
+      </div>
     </div>
 
     <script src="assets/js/constants.js" type="text/javascript"></script>

@@ -52,16 +52,17 @@ const initFiltersModule = async () => {
 
 const checkLoginModule = () => {
   const user = userIsConnected();
-  const loginButton = document.getElementById("login");
 
-  if (user) loginButton.remove();
-
-  const loggedUserUiElements = document.querySelectorAll(
-    ".logged-user-elements"
-  );
+  const loggedUserUiElements = document.querySelectorAll(".logged-elements");
 
   loggedUserUiElements.forEach((element) => {
     element.style.display = user ? "block" : "none";
+  });
+
+  const publicUserUiElements = document.querySelectorAll(".public-elements");
+
+  publicUserUiElements.forEach((element) => {
+    element.style.display = user ? "none" : "block";
   });
 };
 
@@ -73,10 +74,87 @@ const logoutModule = () => {
   });
 };
 
+const displayWorksEditionCards = async () => {
+  /*
+  <div class="filter">
+    <img
+      src="/FrontEnd/assets/images/abajour-tahina.png"
+      alt=""
+    />
+    <button class="regular">
+      <i class="fa-regular fa-trash-can"></i>
+    </button>
+
+    <button class="edit">éditer</button>
+  </div>
+  */
+  // 1 - Récupérer les données de l'API
+  // 2 - Recuperer le container
+  // 3 - Créer les éléments HTML
+  // 4 - Ajouter les éléments au container
+};
+
+const showModalModule = () => {
+  const modal = document.getElementById("modal");
+
+  if (!userIsConnected()) {
+    modal.remove();
+
+    return;
+  }
+
+  displayWorksEditionCards();
+
+  const modalButton = document.getElementById("modal-button");
+  const galleryEdition = document.getElementById("gallery-edition");
+  const photoAdd = document.getElementById("photo-add");
+
+  modalButton.addEventListener("click", () => {
+    modal.style.display = "block";
+    galleryEdition.style.display = "block";
+    photoAdd.style.display = "none";
+  });
+
+  const closeModalButton = document.querySelectorAll(".close-modal-button");
+
+  closeModalButton.forEach((button) => {
+    button.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+  });
+};
+
+const photoEditionModule = () => {
+  if (!userIsConnected()) return;
+
+  const galleryEdition = document.getElementById("gallery-edition");
+  const photoAdd = document.getElementById("photo-add");
+
+  const addPhotoButton = document.getElementById("add-photo-button");
+
+  addPhotoButton.addEventListener("click", () => {
+    galleryEdition.style.display = "none";
+    photoAdd.style.display = "block";
+  });
+
+  const prevStepGallerybutton = document.getElementById(
+    "prev-step-gallery-button"
+  );
+
+  prevStepGallerybutton.addEventListener("click", () => {
+    galleryEdition.style.display = "block";
+    photoAdd.style.display = "none";
+  });
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   initFiltersModule();
 
   checkLoginModule();
 
   logoutModule();
+
+  showModalModule();
+
+  photoEditionModule();
 });

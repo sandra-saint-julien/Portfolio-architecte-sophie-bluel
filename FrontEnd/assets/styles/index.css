@@ -1,4 +1,4 @@
-#buttonContainer {
+#button-container {
   margin-left: 300px;
   margin-bottom: 50px;
   margin-top: 50px;
@@ -167,7 +167,7 @@ li:hover {
   color: black;
 }
 
-#del {
+#modal-button {
   transform: translateY(-120%);
   display: inline-block;
   margin-left: 350px;
@@ -241,31 +241,40 @@ footer nav ul {
 }
 
 #modal {
+  display: none;
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 1px solid black;
-  border-radius: 10px;
-  background-color: white;
-  width: 600px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#gallery-edition {
+  margin: 0;
+}
+
+#modal-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 #gallery-edit {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-content: center;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 30px 20px;
+  position: relative;
+  background-color: white;
+  width: 50vw;
+  padding: 70px;
 }
 
 .photos-gallery {
   font-size: 26px;
   font-family: "Syne";
-  margin-bottom: 10px;
   margin-top: 0;
+  display: flex;
+  justify-content: center;
 }
 
 .filter {
@@ -273,14 +282,13 @@ footer nav ul {
 }
 
 .filter img {
-  width: 90px;
-  height: 120px;
+  width: 100%;
   padding: 3px;
 }
 
 .part {
   display: flex;
-  flex-direction: row;
+  justify-content: center;
   padding: 10px;
 }
 
@@ -292,9 +300,9 @@ footer nav ul {
 }
 
 #edit-text {
-  display: flex;
-  flex-direction: row;
-  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 15px;
 }
 
 .add {
@@ -310,18 +318,29 @@ footer nav ul {
   color: white;
 }
 
-.delete {
+.close-modal-button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
   border: none;
   background-color: white;
-  position: absolute;
-  top: 0;
-  right: 0;
   padding: 20px;
   font-size: 20px;
   border-radius: 20px;
 }
 
-.delete:hover {
+#prev-step-gallery-button {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  border: none;
+  background-color: white;
+  padding: 20px;
+  font-size: 20px;
+  border-radius: 20px;
+}
+
+.close-modal-button :hover {
   background-color: transparent;
   color: black;
 }
@@ -342,25 +361,22 @@ footer nav ul {
 }
 
 .line {
-  margin-bottom: 50px;
-  width: 490px;
-  height: 1px;
-  background-color: gray;
+  margin: 30px 0;
+  height: 2px;
+  background-color: rgb(216, 216, 216);
 }
 
 /*********** SECOND MODAL CSS ****************/
 
 #modal-add {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 1px solid black;
-  border-radius: 10px;
-  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.delete-gallery {
+.close-modal-button -gallery {
   font-family: "Syne";
   font-size: 14px;
   color: red;
@@ -370,7 +386,11 @@ footer nav ul {
   background-color: white;
 }
 
-.delete-gallery:hover {
+.close-modal-button -gallery:hover {
   background-color: transparent;
   color: red;
+}
+
+#photo-add {
+  display: none;
 }
