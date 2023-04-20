@@ -410,3 +410,141 @@ footer nav ul {
 #photo-add {
   display: none;
 }
+
+/*******************ADD PHOTO***********************/
+#photo-add {
+  position: relative;
+  width: 400px;
+  height: 600px;
+}
+
+.photos-gallery {
+  display: flex;
+  flex-direction: column;
+  font-family: "Syne";
+  gap: 19px;
+}
+
+.picture-add {
+  position: absolute;
+  margin-bottom: 1050px;
+  margin-left: 230px;
+  font-size: 26px;
+}
+
+.taker-photo {
+  display: flex;
+  justify-content: center;
+  width: 600px;
+  height: 190px;
+}
+
+.photo-taker {
+  display: flex;
+  flex-direction: column;
+  width: 610px;
+  height: 300px;
+  font-size: 85px;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  border: 1px solid #e8f1f6;
+  background-color: #e8f1f6;
+  border-radius: 20px;
+  color: #b9c5cc;
+}
+
+.photo-taker:hover {
+  background-color: #e8f1f6;
+  color: #b9c5cc;
+}
+
+#title-photo-add {
+  position: absolute;
+  margin-top: 200px;
+  width: 350px;
+  height: 50px;
+  border-radius: 20px;
+  border: 1px solid #cbd6dc;
+  background-color: #cbd6dc;
+  font-family: "Syne";
+}
+#title-photo-add:hover {
+  background-color: #cbd6dc;
+  color: black;
+}
+
+.size {
+  margin-top: 15px;
+  font-size: 12px;
+  position: absolute;
+  margin-top: 260px;
+}
+
+#vector-icon {
+  position: absolute;
+  margin-left: 240px;
+  margin-bottom: 110px;
+}
+
+#title-place {
+  margin-top: 120px;
+  font-size: 14px;
+}
+
+#title-box {
+  width: 590px;
+  height: 70px;
+  border: 1px solid black;
+  margin-top: 20px;
+}
+
+#category {
+  margin-bottom: 290px;
+  font-size: 14px;
+}
+
+#category-box {
+  width: 590px;
+  height: 70px;
+  border: 1px solid black;
+  margin-top: 20px;
+}
+
+#category-box:after::selection {
+}
+
+.plank {
+  margin-top: 35px;
+  border: 1px solid black;
+  width: 590px;
+}
+
+.right {
+  margin-top: 50px;
+  margin-left: 150px;
+  width: 250px;
+  height: 45px;
+  border-radius: 20px;
+  border: 1px solid grey;
+  font-family: "Syne";
+  background-color: grey;
+  color: white;
+}
+
+.right:hover {
+  background-color: grey;
+  color: white;
+}
+
+select {
+  padding: 10px;
+  font-size: 14px;
+  border: none;
+  background-color: #fff;
+  margin-left: 380px;
+}
+
+select option.hidden {
+  display: none;
+}

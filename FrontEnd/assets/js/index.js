@@ -91,12 +91,12 @@ const displayWorksEditionCards = async () => {
       const deleteButton = document.createElement("button");
       deleteButton.classList.add("regular");
       deleteButton.innerHTML = '<i class="fa-regular fa-trash-can"></i>';
-      deleteButton.addEventListener("click", async () => {
+      deleteButton.addEventListener("click", async (event) => {
         try {
           await fetch(`https://localhost:5678/api/images/${image._id}`, {
             method: "DELETE",
           });
-          filterDiv.remove();
+          event.target.parentNode.parentNode.remove();
         } catch (error) {
           console.error(error);
         }
@@ -105,35 +105,45 @@ const displayWorksEditionCards = async () => {
       const editButton = document.createElement("button");
       editButton.classList.add("edit");
       editButton.textContent = "éditer";
-      editButton.addEventListener("click", () => {});
+      editButton.addEventListener("click", () => {
+        const modal = document.createElement("div");
+        modal.classList.add("modal");
+
+        const modalContent = document.createElement("div");
+        modalContent.classList.add("modal-content");
+
+        const modalImg = document.createElement("img");
+        modalImg.src = image.imageUrl;
+        modalImg.alt = image.title;
+
+        const closeModal = document.createElement("span");
+        closeModal.classList.add("close-modal");
+        closeModal.innerHTML = "&times;";
+        closeModal.addEventListener("click", () => {
+          modal.remove();
+        });
+
+        modalContent.appendChild(modalImg);
+        modalContent.appendChild(closeModal);
+        modal.appendChild(modalContent);
+
+        document.body.appendChild(modal);
+      });
+
+      const buttonsContainer = document.createElement("div");
+      buttonsContainer.classList.add("buttons-container");
+
+      buttonsContainer.appendChild(deleteButton);
+      buttonsContainer.appendChild(editButton);
 
       filterDiv.appendChild(imgElement);
-      filterDiv.appendChild(deleteButton);
-      filterDiv.appendChild(editButton);
+      filterDiv.appendChild(buttonsContainer);
       galleryEdition.appendChild(filterDiv);
     });
   } catch (error) {
     console.error(error);
   }
 };
-
-/*
-  <div class="filter">
-    <img
-      src="/FrontEnd/assets/images/abajour-tahina.png"
-      alt=""
-    />
-    <button class="regular">
-      <i class="fa-regular fa-trash-can"></i>
-    </button>
-
-    <button class="edit">éditer</button>
-  </div>
-  */
-// 1 - Récupérer les données de l'API
-// 2 - Recuperer le container
-// 3 - Créer les éléments HTML
-// 4 - Ajouter les éléments au container
 
 const showModalModule = () => {
   const modal = document.getElementById("modal");

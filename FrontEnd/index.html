@@ -157,14 +157,40 @@
           <!--------------------------- EDITION ----------------------------->
           <section id="photo-add">
             <header class="photos-gallery">
-              <h3>Galerie photo</h3>
+              <div class="picture-add">Ajout photo</div>
 
               <button class="close-modal-button">
                 <i class="fa-solid fa-xmark"></i>
               </button>
+              <article class="taker-photo">
+                <button class="photo-taker">
+                  <i
+                    id="vector-icon"
+                    class="fa-solid fa-arrow-up-right-from-square"
+                  ></i>
+                </button>
+                <button id="title-photo-add">+ Ajouter photo</button>
+                <div class="size">jpg,png: 4mo max</div>
+              </article>
+              <article id="title-place">
+                Titre
+                <div id="title-box"></div>
+              </article>
+              <article id="category">
+                Categorie
 
+                <div id="category-box">
+                  <select>
+                    <option value="categorie1">Objects</option>
+                    <option value="categorie2">Appartements</option>
+                    <option value="categorie3">Hôtels et restaurants</option>
+                  </select>
+                </div>
+                <div class="plank"></div>
+                <button class="right">Valider</button>
+              </article>
               <button id="prev-step-gallery-button">
-                <i class="fa-solid fa-xmark"></i>
+                <i class="fa-solid fa-arrow-left"></i>
               </button>
             </header>
           </section>
