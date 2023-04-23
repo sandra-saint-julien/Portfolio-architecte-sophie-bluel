@@ -128,7 +128,7 @@
           <!------------------------- GALLERY ------------------------------->
           <section id="gallery-edition">
             <header class="photos-gallery">
-              <h3>Galerie photo</h3>
+              <h3 class="modal-title">Galerie photo</h3>
 
               <button class="close-modal-button">
                 <i class="fa-solid fa-xmark"></i>
@@ -143,7 +143,7 @@
 
             <footer>
               <div id="modal-add">
-                <button class="add" id="add-photo-button">
+                <button class="add-button" id="add-photo-button">
                   Ajouter une photo
                 </button>
 
@@ -157,42 +157,72 @@
           <!--------------------------- EDITION ----------------------------->
           <section id="photo-add">
             <header class="photos-gallery">
-              <div class="picture-add">Ajout photo</div>
-
               <button class="close-modal-button">
                 <i class="fa-solid fa-xmark"></i>
               </button>
-              <article class="taker-photo">
-                <button class="photo-taker">
-                  <i
-                    id="vector-icon"
-                    class="fa-solid fa-arrow-up-right-from-square"
-                  ></i>
-                </button>
-                <button id="title-photo-add">+ Ajouter photo</button>
-                <div class="size">jpg,png: 4mo max</div>
-              </article>
-              <article id="title-place">
-                Titre
-                <div id="title-box"></div>
-              </article>
-              <article id="category">
-                Categorie
 
-                <div id="category-box">
-                  <select>
-                    <option value="categorie1">Objects</option>
-                    <option value="categorie2">Appartements</option>
-                    <option value="categorie3">Hôtels et restaurants</option>
-                  </select>
-                </div>
-                <div class="plank"></div>
-                <button class="right">Valider</button>
-              </article>
-              <button id="prev-step-gallery-button">
+              <button id="back-modal-button">
                 <i class="fa-solid fa-arrow-left"></i>
               </button>
             </header>
+
+            <form class="add-work-form">
+              <h3 class="modal-title">Ajout photo</h3>
+
+              <label for="work-photo" class="upload-file">
+                <div>
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                  <h4 class="add-pictures">+ Ajouter une photo</h4>
+                  <input
+                    id="work-photo"
+                    class="sr-only"
+                    name="work-photo"
+                    type="file"
+                    size="4194304"
+                    required
+                  />
+
+                  <i>jpg, png: 4mo max</i>
+                </div>
+              </label>
+
+              <div>
+                <label class="form-row-label" for="work-title">Titre</label>
+
+                <div class="form-row">
+                  <input
+                    id="work-title"
+                    type="text"
+                    name="work-title"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label class="form-row-label" for="work-category"
+                  >Categorie
+                </label>
+
+                <div class="form-row">
+                  <select
+                    id="work-category"
+                    name="work-category"
+                    type="text"
+                    required
+                  >
+                    <option value="" selected>Choissisez une option</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <div class="line"></div>
+
+                <button class="add-button">Valider</button>
+              </div>
+            </form>
           </section>
         </article>
       </div>

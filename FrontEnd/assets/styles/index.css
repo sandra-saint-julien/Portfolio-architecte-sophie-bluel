@@ -297,6 +297,12 @@ footer nav ul {
   flex-direction: column;
   border: none;
   background-color: white;
+  color: black;
+}
+
+.edit:hover {
+  background-color: white;
+  color: black;
 }
 
 #edit-text {
@@ -307,17 +313,20 @@ footer nav ul {
   height: 450px;
 }
 
-.add {
-  width: 300px;
-  height: 30px;
+.add-button {
   font-family: "Syne";
+  width: 300px;
   font-size: 15px;
-  border-radius: 20px;
+  border-radius: 100px;
+  padding: 10px 30px;
+  margin: 0 auto;
   background-color: #1d6154;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
+  outline: none;
+  border: none;
 }
 
 .close-modal-button {
@@ -358,6 +367,12 @@ footer nav ul {
   padding: 20px;
   font-size: 20px;
   border-radius: 20px;
+  color: black;
+}
+
+#prev-step-gallery-button:hover {
+  background-color: white;
+  color: back;
 }
 
 .regular {
@@ -392,32 +407,6 @@ footer nav ul {
   margin-top: 50px;
 }
 
-.close-modal-button -gallery {
-  font-family: "Syne";
-  font-size: 14px;
-  color: red;
-  margin-left: 65px;
-  margin-top: 23px;
-  border: none;
-  background-color: white;
-}
-
-.close-modal-button -gallery:hover {
-  background-color: transparent;
-  color: red;
-}
-
-#photo-add {
-  display: none;
-}
-
-/*******************ADD PHOTO***********************/
-#photo-add {
-  position: relative;
-  width: 400px;
-  height: 600px;
-}
-
 .photos-gallery {
   display: flex;
   flex-direction: column;
@@ -425,126 +414,86 @@ footer nav ul {
   gap: 19px;
 }
 
-.picture-add {
+#back-modal-button {
   position: absolute;
-  margin-bottom: 1050px;
-  margin-left: 230px;
-  font-size: 26px;
-}
-
-.taker-photo {
-  display: flex;
-  justify-content: center;
-  width: 600px;
-  height: 190px;
-}
-
-.photo-taker {
-  display: flex;
-  flex-direction: column;
-  width: 610px;
-  height: 300px;
-  font-size: 85px;
-  flex-wrap: wrap;
-  align-content: center;
-  justify-content: center;
-  border: 1px solid #e8f1f6;
-  background-color: #e8f1f6;
+  left: 10px;
+  top: 10px;
+  border: none;
+  background-color: white;
+  padding: 20px;
+  font-size: 20px;
   border-radius: 20px;
-  color: #b9c5cc;
 }
 
-.photo-taker:hover {
-  background-color: #e8f1f6;
-  color: #b9c5cc;
-}
-
-#title-photo-add {
-  position: absolute;
-  margin-top: 200px;
-  width: 350px;
-  height: 50px;
-  border-radius: 20px;
-  border: 1px solid #cbd6dc;
-  background-color: #cbd6dc;
-  font-family: "Syne";
-}
-#title-photo-add:hover {
-  background-color: #cbd6dc;
+#back-modal-button:hover {
+  background-color: transparent;
   color: black;
 }
 
-.size {
-  margin-top: 15px;
-  font-size: 12px;
-  position: absolute;
-  margin-top: 260px;
+#photo-add {
+  margin: 0;
 }
 
-#vector-icon {
-  position: absolute;
-  margin-left: 240px;
-  margin-bottom: 110px;
-}
-
-#title-place {
-  margin-top: 120px;
-  font-size: 14px;
-}
-
-#title-box {
-  width: 590px;
-  height: 70px;
-  border: 1px solid black;
-  margin-top: 20px;
-}
-
-#category {
-  margin-bottom: 290px;
-  font-size: 14px;
-}
-
-#category-box {
-  width: 590px;
-  height: 70px;
-  border: 1px solid black;
-  margin-top: 20px;
-}
-
-#category-box:after::selection {
-}
-
-.plank {
-  margin-top: 35px;
-  border: 1px solid black;
-  width: 590px;
-}
-
-.right {
-  margin-top: 50px;
-  margin-left: 150px;
-  width: 250px;
-  height: 45px;
-  border-radius: 20px;
-  border: 1px solid grey;
+.modal-title {
   font-family: "Syne";
-  background-color: grey;
-  color: white;
+  font-size: 2rem;
+  text-align: center;
 }
 
-.right:hover {
-  background-color: grey;
-  color: white;
+.add-work-form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
+.upload-file {
+  display: flex;
+  justify-content: center;
+  background-color: #e8f1f6;
+  padding: 30px 20px 20px 20px;
+}
+
+.upload-file > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.upload-file .fa-solid {
+  color: #b9c5cc;
+  font-size: 5rem;
+  line-height: 1;
+}
+
+.form-row {
+  position: relative;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  height: 60px;
+  padding: 0 10px;
+}
+
+.form-row > input[type="text"],
 select {
-  padding: 10px;
-  font-size: 14px;
+  width: 100%;
+  height: 100%;
   border: none;
-  background-color: #fff;
-  margin-left: 380px;
+  outline: none;
+  font-size: 1rem;
 }
 
-select option.hidden {
-  display: none;
+.form-row-label {
+  margin-bottom: 10px;
+  font-family: "Work Sans";
+  font-size: 1rem;
+}
+
+.add-pictures {
+  border: 1px solid #cbd6dc;
+  background-color: #cbd6dc;
+  font-family: "Syne";
+  font-size: 1rem;
+  padding: 10px 30px;
+  border-radius: 20px;
+  color: #306685;
 }

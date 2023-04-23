@@ -2,7 +2,7 @@
 const userIsConnected = () => localStorage.getItem("accessToken");
 
 const displayWorks = async (category) => {
-  const works = await getApiData(ENDPOINTS.WORKS, HTTP_VERB.GET);
+  const works = await getApiData(`${API_BASE_URL}/works`, "GET");
 
   if (works?.length) {
     const filteredWorks =
@@ -154,8 +154,6 @@ const showModalModule = () => {
     return;
   }
 
-  displayWorksEditionCards();
-
   const modalButton = document.getElementById("modal-button");
   const galleryEdition = document.getElementById("gallery-edition");
   const photoAdd = document.getElementById("photo-add");
@@ -188,11 +186,9 @@ const photoEditionModule = () => {
     photoAdd.style.display = "block";
   });
 
-  const prevStepGallerybutton = document.getElementById(
-    "prev-step-gallery-button"
-  );
+  const backModalButton = document.getElementById("back-modal-button");
 
-  prevStepGallerybutton.addEventListener("click", () => {
+  backModalButton.addEventListener("click", () => {
     galleryEdition.style.display = "block";
     photoAdd.style.display = "none";
   });
@@ -210,4 +206,6 @@ document.addEventListener("DOMContentLoaded", () => {
   photoEditionModule();
 
   displayWorksEditionCards();
+
+  showCategoriesPhotos();
 });
