@@ -2,7 +2,7 @@
 const userIsConnected = () => localStorage.getItem("accessToken");
 
 const displayWorks = async (category) => {
-  const works = await getApiData(`${API_BASE_URL}/works`, "GET");
+  const works = await API(ENDPOINTS.WORKS, HTTP_VERB.GET);
 
   if (works?.length) {
     const filteredWorks =
@@ -74,9 +74,40 @@ const logoutModule = () => {
   });
 };
 
+const deleteWork = async (workId) => {
+  await API(`${ENDPOINTS.WORKS}/${workId}`, HTTP_VERB.DELETE, {
+    Authorization: "Bearer " + localStorage.getItem("accessToken"),
+  });
+
+  alert("Le projet à été supprimer");
+};
+
+const addWorkModule = () => {
+  const workForm = document.querySelector("#add-work-form");
+
+  workForm.addEventListener("submit", async (event) => {
+    try {
+      event.preventDefault();
+
+      const formData = new FormData(workForm);
+
+      await API(
+        ENDPOINTS.WORKS,
+        HTTP_VERB.POST,
+        {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+        },
+        formData
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  });
+};
+
 const displayWorksEditionCards = async () => {
   try {
-    const images = await getApiData(ENDPOINTS.WORKS, HTTP_VERB.GET);
+    const images = await API(ENDPOINTS.WORKS, HTTP_VERB.GET);
 
     const galleryEdition = document.getElementById("edit-text");
 
@@ -89,46 +120,18 @@ const displayWorksEditionCards = async () => {
       imgElement.alt = image.title;
 
       const deleteButton = document.createElement("button");
+      deleteButton.type = "button";
       deleteButton.classList.add("regular");
       deleteButton.innerHTML = '<i class="fa-regular fa-trash-can"></i>';
       deleteButton.addEventListener("click", async (event) => {
-        try {
-          await fetch(`https://localhost:5678/api/images/${image._id}`, {
-            method: "DELETE",
-          });
-          event.target.parentNode.parentNode.remove();
-        } catch (error) {
-          console.error(error);
-        }
+        event.preventDefault();
+
+        deleteWork(image.id);
       });
 
       const editButton = document.createElement("button");
       editButton.classList.add("edit");
       editButton.textContent = "éditer";
-      editButton.addEventListener("click", () => {
-        const modal = document.createElement("div");
-        modal.classList.add("modal");
-
-        const modalContent = document.createElement("div");
-        modalContent.classList.add("modal-content");
-
-        const modalImg = document.createElement("img");
-        modalImg.src = image.imageUrl;
-        modalImg.alt = image.title;
-
-        const closeModal = document.createElement("span");
-        closeModal.classList.add("close-modal");
-        closeModal.innerHTML = "&times;";
-        closeModal.addEventListener("click", () => {
-          modal.remove();
-        });
-
-        modalContent.appendChild(modalImg);
-        modalContent.appendChild(closeModal);
-        modal.appendChild(modalContent);
-
-        document.body.appendChild(modal);
-      });
 
       const buttonsContainer = document.createElement("div");
       buttonsContainer.classList.add("buttons-container");
@@ -173,6 +176,21 @@ const showModalModule = () => {
   });
 };
 
+const getWorkCategories = async () => {
+  const categories = await API(ENDPOINTS.CATEGORY, HTTP_VERB.GET);
+
+  const categoriesSelect = document.getElementById("category");
+
+  categories.forEach((categorie) => {
+    const option = document.createElement("option");
+
+    option.textContent = categorie.name;
+    option.value = categorie.id;
+
+    categoriesSelect.appendChild(option);
+  });
+};
+
 const photoEditionModule = () => {
   if (!userIsConnected()) return;
 
@@ -207,5 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   displayWorksEditionCards();
 
-  showCategoriesPhotos();
+  getWorkCategories();
+
+  addWorkModule();
 });

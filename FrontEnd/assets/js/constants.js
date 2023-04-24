@@ -28,12 +28,12 @@ const WORK_CATEGORY = {
 /* UTILS */
 
 // Fonction utilitaire pour envoyer une requête à l'API
-const getApiData = async (url, method, headers, body) => {
+const API = async (url, method, headers, body) => {
   try {
     const response = await fetch(url, {
       method, // Utilisation de la méthode HTTP passée en paramètre
       headers, // Utilisation des en-têtes passés en paramètre
-      body: JSON.stringify(body), // Transformation du corps en JSON
+      body, // Transformation du corps en JSON
     });
 
     if (!response.ok) {

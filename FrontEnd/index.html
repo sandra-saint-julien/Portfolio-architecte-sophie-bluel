@@ -166,18 +166,18 @@
               </button>
             </header>
 
-            <form class="add-work-form">
+            <form id="add-work-form" action="#">
               <h3 class="modal-title">Ajout photo</h3>
 
-              <label for="work-photo" class="upload-file">
+              <label for="image" class="upload-file">
                 <div>
                   <i class="fa-solid fa-arrow-up-right-from-square"></i>
 
                   <h4 class="add-pictures">+ Ajouter une photo</h4>
                   <input
-                    id="work-photo"
+                    id="image"
                     class="sr-only"
-                    name="work-photo"
+                    name="image"
                     type="file"
                     size="4194304"
                     required
@@ -188,30 +188,18 @@
               </label>
 
               <div>
-                <label class="form-row-label" for="work-title">Titre</label>
+                <label class="form-row-label" for="title">Titre</label>
 
                 <div class="form-row">
-                  <input
-                    id="work-title"
-                    type="text"
-                    name="work-title"
-                    required
-                  />
+                  <input id="title" type="text" name="title" required />
                 </div>
               </div>
 
               <div>
-                <label class="form-row-label" for="work-category"
-                  >Categorie
-                </label>
+                <label class="form-row-label" for="category">Categorie </label>
 
                 <div class="form-row">
-                  <select
-                    id="work-category"
-                    name="work-category"
-                    type="text"
-                    required
-                  >
+                  <select id="category" name="category" type="text" required>
                     <option value="" selected>Choissisez une option</option>
                   </select>
                 </div>
@@ -220,7 +208,7 @@
               <div>
                 <div class="line"></div>
 
-                <button class="add-button">Valider</button>
+                <button class="add-button" type="submit">Valider</button>
               </div>
             </form>
           </section>
