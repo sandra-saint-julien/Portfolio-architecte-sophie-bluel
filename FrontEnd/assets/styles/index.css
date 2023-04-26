@@ -438,6 +438,7 @@ footer nav ul {
   font-family: "Syne";
   font-size: 2rem;
   text-align: center;
+  padding: 20px;
 }
 
 .add-work-form {
@@ -484,6 +485,7 @@ select {
 
 .form-row-label {
   margin-bottom: 10px;
+  margin-top: 20px;
   font-family: "Work Sans";
   font-size: 1rem;
 }

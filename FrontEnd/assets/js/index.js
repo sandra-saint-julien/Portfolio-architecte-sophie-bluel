@@ -191,6 +191,27 @@ const getWorkCategories = async () => {
   });
 };
 
+const displayUploadPreview = () => {
+  const previewWrapper = document.getElementById("upload-preview");
+  const imageInput = document.getElementById("image");
+  const fileChange = document.getElementById("file-change");
+
+  const image = document.createElement("img");
+  image.style.height = "200px";
+
+  previewWrapper.append(image);
+
+  imageInput.addEventListener("change", (event) => {
+    image.src = URL.createObjectURL(event.target.files[0]);
+
+    if (event.target.files[0]) {
+      fileChange.style.display = "none";
+    } else {
+      fileChange.style.display = "block";
+    }
+  });
+};
+
 const photoEditionModule = () => {
   if (!userIsConnected()) return;
 
@@ -228,4 +249,6 @@ document.addEventListener("DOMContentLoaded", () => {
   getWorkCategories();
 
   addWorkModule();
+
+  displayUploadPreview();
 });
