@@ -16,7 +16,7 @@ const loginModule = async () => {
       };
 
       // Envoi de la requête d'authentification à l'API avec les données de connexion
-      const response = await WorksApi(
+      const response = await API(
         ENDPOINTS.LOGIN, // Utilisation de l'endpoint LOGIN
         HTTP_VERB.POST, // Utilisation de la méthode POST
         headers, // Utilisation des en-têtes configurés
