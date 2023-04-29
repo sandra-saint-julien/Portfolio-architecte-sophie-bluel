@@ -1,22 +1,26 @@
 /* HOME */
 
+//vérifie si l'utilisateur est connecté
+
 const userIsConnected = () => localStorage.getItem("accessToken");
 
+//Récupère les projets et les affiche selon leur catégorie
 const displayWorks = async (categoryId) => {
   const works = await API(ENDPOINTS.WORKS, HTTP_VERB.GET);
 
   const galleryContainer = document.getElementById("gallery-container");
 
-  // Clean gallery container before adding new images
+  //suprime tous les enfants du conteneur d'affichage
   while (galleryContainer.firstChild) {
     galleryContainer.removeChild(galleryContainer.firstChild);
   }
-
+  //filtre les prjets selon la catégorie selectionnée
   const filteredWorks =
     categoryId === 0
       ? works
       : works.filter((work) => work.categoryId === categoryId);
 
+  //affiche chaque projet
   filteredWorks.forEach((work) => {
     const figure = document.createElement("figure");
     const figcaption = document.createElement("figcaption");
@@ -30,6 +34,7 @@ const displayWorks = async (categoryId) => {
   });
 };
 
+//crée un bouton pour filtrer chaque catégorie du projet
 const createFilterButton = (category) => {
   const button = document.createElement("button");
   button.textContent = category.name;
@@ -37,16 +42,17 @@ const createFilterButton = (category) => {
 
   return button;
 };
-
+//affiche les projets correspondants à chaque catégories sélectionnée
 const initFiltersModule = async () => {
   const categories = await API(ENDPOINTS.CATEGORY, HTTP_VERB.GET);
 
   const galleryContainer = document.getElementById("button-container");
 
-  // Add all filter button
+  // Ajout du bouton tous pour ensuite afficher tous les projets
   const allFilterButton = createFilterButton({ name: "Tous", id: 0 });
   galleryContainer.appendChild(allFilterButton);
 
+  //ajout d'un bouton pour chaque catégorie de projet
   categories.forEach((category) => {
     const button = createFilterButton(category);
 
@@ -58,6 +64,7 @@ const initFiltersModule = async () => {
   });
 };
 
+//vérifie si l'utilisateur est connacté et affiche les éléments de l'interface
 const checkLoginModule = () => {
   const user = userIsConnected();
 
@@ -74,6 +81,7 @@ const checkLoginModule = () => {
   });
 };
 
+//déconnexion de l'utilisateur
 const logoutModule = () => {
   const logoutButton = document.getElementById("logout");
 
@@ -82,6 +90,7 @@ const logoutModule = () => {
   });
 };
 
+//supprime un projet en revoyant une requête delete à l'api
 const deleteWork = async (workId) => {
   await API(`${ENDPOINTS.WORKS}/${workId}`, HTTP_VERB.DELETE, {
     Authorization: "Bearer " + localStorage.getItem("accessToken"),
@@ -90,17 +99,22 @@ const deleteWork = async (workId) => {
   alert("Le projet à été supprimer");
 };
 
+//module:ajout d'un nouveau projet
 const addWorkModule = () => {
+  //vérifie si l'utilisateur est connecté avant de continuer
   if (!userIsConnected()) return;
 
+  //selectionne un nformulaire d'ajout d'un projet
   const workForm = document.querySelector("#add-work-form");
 
   workForm.addEventListener("submit", async (event) => {
     try {
       event.preventDefault();
 
+      //récupère les données du formulaire
       const formData = new FormData(workForm);
 
+      // envoie une requete POST à l'api pour ajouter un nouveay=u projet
       await API(
         ENDPOINTS.WORKS,
         HTTP_VERB.POST,
@@ -121,16 +135,19 @@ const displayWorksEditionCards = async () => {
 
     const images = await API(ENDPOINTS.WORKS, HTTP_VERB.GET);
 
+    //récupère lélément pour afficher la galerie d'édition
     const galleryEdition = document.getElementById("edit-text");
 
+    //pour chaque image récupérée , crée une carte dédition
     images.forEach((image) => {
+      //crée un élement div pour ajouter un filtre à l'image
       const filterDiv = document.createElement("div");
       filterDiv.classList.add("filter");
 
       const imgElement = document.createElement("img");
       imgElement.src = image.imageUrl;
       imgElement.alt = image.title;
-
+      //crée un bouton pour supprimer l'image
       const deleteButton = document.createElement("button");
       deleteButton.type = "button";
       deleteButton.classList.add("regular");
@@ -140,17 +157,17 @@ const displayWorksEditionCards = async () => {
 
         deleteWork(image.id);
       });
-
+      //crée un bouton pour éditer l'image
       const editButton = document.createElement("button");
       editButton.classList.add("edit");
       editButton.textContent = "éditer";
-
+      //crée un conteneur pour les boutons de l'image
       const buttonsContainer = document.createElement("div");
       buttonsContainer.classList.add("buttons-container");
-
+      //ajoute les bouton au conteneur
       buttonsContainer.appendChild(deleteButton);
       buttonsContainer.appendChild(editButton);
-
+      //ajoute l'image et les boutons à la carte d'édition
       filterDiv.appendChild(imgElement);
       filterDiv.appendChild(buttonsContainer);
       galleryEdition.appendChild(filterDiv);
@@ -161,14 +178,16 @@ const displayWorksEditionCards = async () => {
 };
 
 const showModalModule = () => {
+  //s'occupe d'afficher la fenêtee modale contenant la galerie d'édition
+  //on récupère la fenêtre de la modale
   const modal = document.getElementById("modal");
-
+  // si l'utilisateur n'est pas connecté , on supprime la fenêtre modale et on arrête la fonction
   if (!userIsConnected()) {
     modal.remove();
 
     return;
   }
-
+  //on récupère le bouton qui permet d'ouvrir kla modale , la galerie d'édition et les formulaire d'ajout de photo
   const modalButton = document.getElementById("modal-button");
   const galleryEdition = document.getElementById("gallery-edition");
   const photoAdd = document.getElementById("photo-add");
@@ -193,6 +212,7 @@ const getWorkCategories = async () => {
 
   const categories = await API(ENDPOINTS.CATEGORY, HTTP_VERB.GET);
 
+  //récupère le menu déroulant pour les catégories
   const categoriesSelect = document.getElementById("category");
 
   categories.forEach((categorie) => {
@@ -209,8 +229,8 @@ const displayUploadPreview = () => {
   if (!userIsConnected()) return;
 
   const previewWrapper = document.getElementById("upload-preview");
-  const imageInput = document.getElementById("image");
-  const fileChange = document.getElementById("file-change");
+  const imageInput = document.getElementById("image"); // récupère l'input pour uploader l'image
+  const fileChange = document.getElementById("file-change"); //récupération de la div pour afficher un message si l'ulisisateur veut changer d'image
 
   const image = document.createElement("img");
   image.style.height = "200px";
@@ -218,12 +238,12 @@ const displayUploadPreview = () => {
   previewWrapper.append(image);
 
   imageInput.addEventListener("change", (event) => {
-    image.src = URL.createObjectURL(event.target.files[0]);
+    image.src = URL.createObjectURL(event.target.files[0]); //récupérer l'image selectionné
 
     if (event.target.files[0]) {
-      fileChange.style.display = "none";
+      fileChange.style.display = "none"; //si oui on cache le message pour changer d'image
     } else {
-      fileChange.style.display = "block";
+      fileChange.style.display = "block"; // si non , on affiche le messaage pour changer d'image
     }
   });
 };
@@ -237,6 +257,7 @@ const photoEditionModule = () => {
   const addPhotoButton = document.getElementById("add-photo-button");
 
   addPhotoButton.addEventListener("click", () => {
+    //au click ajouter une photo
     galleryEdition.style.display = "none";
     photoAdd.style.display = "block";
   });
@@ -250,6 +271,7 @@ const photoEditionModule = () => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
+  //lorsque le DOM est chargé on appelle les fonctions
   displayWorks(0);
 
   initFiltersModule();
