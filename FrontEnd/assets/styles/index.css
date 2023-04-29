@@ -1,10 +1,15 @@
 #button-container {
-  margin-left: 300px;
-  margin-bottom: 50px;
-  margin-top: 50px;
+  margin-bottom: 20px;
+}
+
+.centered-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .filter-button {
+  margin: 0 5px;
   padding: 10px 15px;
   border-radius: 20px;
   border: 1px solid #1d6154;

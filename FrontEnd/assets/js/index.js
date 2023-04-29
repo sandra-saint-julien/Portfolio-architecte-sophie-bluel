@@ -1,52 +1,60 @@
 /* HOME */
+
 const userIsConnected = () => localStorage.getItem("accessToken");
 
-const displayWorks = async (category) => {
+const displayWorks = async (categoryId) => {
   const works = await API(ENDPOINTS.WORKS, HTTP_VERB.GET);
 
-  if (works?.length) {
-    const filteredWorks =
-      category === WORK_CATEGORY.ALL
-        ? works
-        : works.filter((work) => work.categoryId === category);
+  const galleryContainer = document.getElementById("gallery-container");
 
-    const galleryContainer = document.getElementById("gallery-container");
-
-    while (galleryContainer.firstChild) {
-      galleryContainer.removeChild(galleryContainer.firstChild);
-    }
-
-    filteredWorks.forEach((work) => {
-      const figure = document.createElement("figure");
-      const figcaption = document.createElement("figcaption");
-      const image = document.createElement("img");
-
-      image.src = work.imageUrl;
-      figcaption.textContent = work.title;
-      figure.appendChild(image);
-      figure.appendChild(figcaption);
-      galleryContainer.appendChild(figure);
-    });
+  // Clean gallery container before adding new images
+  while (galleryContainer.firstChild) {
+    galleryContainer.removeChild(galleryContainer.firstChild);
   }
+
+  const filteredWorks =
+    categoryId === 0
+      ? works
+      : works.filter((work) => work.categoryId === categoryId);
+
+  filteredWorks.forEach((work) => {
+    const figure = document.createElement("figure");
+    const figcaption = document.createElement("figcaption");
+    const image = document.createElement("img");
+
+    image.src = work.imageUrl;
+    figcaption.textContent = work.title;
+    figure.appendChild(image);
+    figure.appendChild(figcaption);
+    galleryContainer.appendChild(figure);
+  });
+};
+
+const createFilterButton = (category) => {
+  const button = document.createElement("button");
+  button.textContent = category.name;
+  button.classList.add("filter-button");
+
+  return button;
 };
 
 const initFiltersModule = async () => {
-  await displayWorks(WORK_CATEGORY.ALL);
+  const categories = await API(ENDPOINTS.CATEGORY, HTTP_VERB.GET);
 
-  document.getElementById("all").addEventListener("click", () => {
-    displayWorks(WORK_CATEGORY.ALL);
-  });
+  const galleryContainer = document.getElementById("button-container");
 
-  document.getElementById("objects").addEventListener("click", () => {
-    displayWorks(WORK_CATEGORY.OBJECT);
-  });
+  // Add all filter button
+  const allFilterButton = createFilterButton({ name: "Tous", id: 0 });
+  galleryContainer.appendChild(allFilterButton);
 
-  document.getElementById("apartments").addEventListener("click", () => {
-    displayWorks(WORK_CATEGORY.APARTMENTS);
-  });
+  categories.forEach((category) => {
+    const button = createFilterButton(category);
 
-  document.getElementById("hostel-apartments").addEventListener("click", () => {
-    displayWorks(WORK_CATEGORY.HOSTELS_APARTMENTS);
+    button.addEventListener("click", async () => {
+      displayWorks(category.id);
+    });
+
+    galleryContainer.appendChild(button);
   });
 };
 
@@ -83,6 +91,8 @@ const deleteWork = async (workId) => {
 };
 
 const addWorkModule = () => {
+  if (!userIsConnected()) return;
+
   const workForm = document.querySelector("#add-work-form");
 
   workForm.addEventListener("submit", async (event) => {
@@ -107,6 +117,8 @@ const addWorkModule = () => {
 
 const displayWorksEditionCards = async () => {
   try {
+    if (!userIsConnected()) return;
+
     const images = await API(ENDPOINTS.WORKS, HTTP_VERB.GET);
 
     const galleryEdition = document.getElementById("edit-text");
@@ -177,6 +189,8 @@ const showModalModule = () => {
 };
 
 const getWorkCategories = async () => {
+  if (!userIsConnected()) return;
+
   const categories = await API(ENDPOINTS.CATEGORY, HTTP_VERB.GET);
 
   const categoriesSelect = document.getElementById("category");
@@ -192,6 +206,8 @@ const getWorkCategories = async () => {
 };
 
 const displayUploadPreview = () => {
+  if (!userIsConnected()) return;
+
   const previewWrapper = document.getElementById("upload-preview");
   const imageInput = document.getElementById("image");
   const fileChange = document.getElementById("file-change");
@@ -234,6 +250,8 @@ const photoEditionModule = () => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
+  displayWorks(0);
+
   initFiltersModule();
 
   checkLoginModule();
