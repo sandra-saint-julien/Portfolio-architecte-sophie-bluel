@@ -6,7 +6,11 @@ const userIsConnected = () => localStorage.getItem("accessToken");
 
 //Récupère les projets et les affiche selon leur catégorie
 const displayWorks = async (categoryId) => {
-  const works = await API(ENDPOINTS.WORKS, HTTP_VERB.GET);
+  const works = await API({
+    url: ENDPOINTS.WORKS,
+    method: HTTP_VERB.GET,
+    errorMessage: "Une erreur est survenue lors de la récupération de projets",
+  });
 
   const galleryContainer = document.getElementById("gallery-container");
 
@@ -14,11 +18,11 @@ const displayWorks = async (categoryId) => {
   while (galleryContainer.firstChild) {
     galleryContainer.removeChild(galleryContainer.firstChild);
   }
+
   //filtre les prjets selon la catégorie selectionnée
-  const filteredWorks =
-    categoryId === 0
-      ? works
-      : works.filter((work) => work.categoryId === categoryId);
+  const filteredWorks = [1, 2, 3].includes(categoryId)
+    ? works.filter((work) => work.categoryId === categoryId)
+    : works;
 
   //affiche chaque projet
   filteredWorks.forEach((work) => {
@@ -39,18 +43,26 @@ const createFilterButton = (category) => {
   const button = document.createElement("button");
   button.textContent = category.name;
   button.classList.add("filter-button");
+  button.type = "button";
 
   return button;
 };
 //affiche les projets correspondants à chaque catégories sélectionnée
 const initFiltersModule = async () => {
-  const categories = await API(ENDPOINTS.CATEGORY, HTTP_VERB.GET);
+  const categories = await API({
+    url: ENDPOINTS.CATEGORY,
+    method: HTTP_VERB.GET,
+  });
 
   const galleryContainer = document.getElementById("button-container");
 
   // Ajout du bouton tous pour ensuite afficher tous les projets
   const allFilterButton = createFilterButton({ name: "Tous", id: 0 });
   galleryContainer.appendChild(allFilterButton);
+
+  allFilterButton.addEventListener("click", async () => {
+    displayWorks(0);
+  });
 
   //ajout d'un bouton pour chaque catégorie de projet
   categories.forEach((category) => {
@@ -92,9 +104,12 @@ const logoutModule = () => {
 
 //supprime un projet en revoyant une requête delete à l'api
 const deleteWork = async (workId) => {
-  await API(`${ENDPOINTS.WORKS}/${workId}`, HTTP_VERB.DELETE, {
-    Authorization: "Bearer " + localStorage.getItem("accessToken"),
-  });
+  await API(
+    { url: `${ENDPOINTS.WORKS}/${workId}`, method: HTTP_VERB.DELETE },
+    {
+      Authorization: "Bearer " + localStorage.getItem("accessToken"),
+    }
+  );
 
   alert("Le projet à été supprimer");
 };
@@ -108,73 +123,67 @@ const addWorkModule = () => {
   const workForm = document.querySelector("#add-work-form");
 
   workForm.addEventListener("submit", async (event) => {
-    try {
-      event.preventDefault();
+    event.preventDefault();
 
-      //récupère les données du formulaire
-      const formData = new FormData(workForm);
+    //récupère les données du formulaire
+    const formData = new FormData(workForm);
 
-      // envoie une requete POST à l'api pour ajouter un nouveay=u projet
-      await API(
-        ENDPOINTS.WORKS,
-        HTTP_VERB.POST,
-        {
-          Authorization: "Bearer " + localStorage.getItem("accessToken"),
-        },
-        formData
-      );
-    } catch (e) {
-      console.error(e);
-    }
+    // envoie une requete POST à l'api pour ajouter un nouveay=u projet
+    await API(
+      {
+        url: ENDPOINTS.WORKS,
+        method: HTTP_VERB.POST,
+      },
+      {
+        Authorization: "Bearer " + localStorage.getItem("accessToken"),
+      },
+      formData
+    );
   });
 };
 
 const displayWorksEditionCards = async () => {
-  try {
-    if (!userIsConnected()) return;
+  if (!userIsConnected()) return;
 
-    const images = await API(ENDPOINTS.WORKS, HTTP_VERB.GET);
+  const images = await API({ url: ENDPOINTS.WORKS, method: HTTP_VERB.GET });
 
-    //récupère lélément pour afficher la galerie d'édition
-    const galleryEdition = document.getElementById("edit-text");
+  //récupère lélément pour afficher la galerie d'édition
+  const galleryEdition = document.getElementById("edit-text");
 
-    //pour chaque image récupérée , crée une carte dédition
-    images.forEach((image) => {
-      //crée un élement div pour ajouter un filtre à l'image
-      const filterDiv = document.createElement("div");
-      filterDiv.classList.add("filter");
+  //pour chaque image récupérée , crée une carte dédition
+  images.forEach((image) => {
+    //crée un élement div pour ajouter un filtre à l'image
+    const filterDiv = document.createElement("div");
+    filterDiv.classList.add("filter");
 
-      const imgElement = document.createElement("img");
-      imgElement.src = image.imageUrl;
-      imgElement.alt = image.title;
-      //crée un bouton pour supprimer l'image
-      const deleteButton = document.createElement("button");
-      deleteButton.type = "button";
-      deleteButton.classList.add("regular");
-      deleteButton.innerHTML = '<i class="fa-regular fa-trash-can"></i>';
-      deleteButton.addEventListener("click", async (event) => {
-        event.preventDefault();
+    const imgElement = document.createElement("img");
+    imgElement.src = image.imageUrl;
+    imgElement.alt = image.title;
+    //crée un bouton pour supprimer l'image
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.classList.add("regular");
+    deleteButton.innerHTML = '<i class="fa-regular fa-trash-can"></i>';
+    deleteButton.addEventListener("click", async (event) => {
+      event.preventDefault();
 
-        deleteWork(image.id);
-      });
-      //crée un bouton pour éditer l'image
-      const editButton = document.createElement("button");
-      editButton.classList.add("edit");
-      editButton.textContent = "éditer";
-      //crée un conteneur pour les boutons de l'image
-      const buttonsContainer = document.createElement("div");
-      buttonsContainer.classList.add("buttons-container");
-      //ajoute les bouton au conteneur
-      buttonsContainer.appendChild(deleteButton);
-      buttonsContainer.appendChild(editButton);
-      //ajoute l'image et les boutons à la carte d'édition
-      filterDiv.appendChild(imgElement);
-      filterDiv.appendChild(buttonsContainer);
-      galleryEdition.appendChild(filterDiv);
+      deleteWork(image.id);
     });
-  } catch (error) {
-    console.error(error);
-  }
+    //crée un bouton pour éditer l'image
+    const editButton = document.createElement("button");
+    editButton.classList.add("edit");
+    editButton.textContent = "éditer";
+    //crée un conteneur pour les boutons de l'image
+    const buttonsContainer = document.createElement("div");
+    buttonsContainer.classList.add("buttons-container");
+    //ajoute les bouton au conteneur
+    buttonsContainer.appendChild(deleteButton);
+    buttonsContainer.appendChild(editButton);
+    //ajoute l'image et les boutons à la carte d'édition
+    filterDiv.appendChild(imgElement);
+    filterDiv.appendChild(buttonsContainer);
+    galleryEdition.appendChild(filterDiv);
+  });
 };
 
 const showModalModule = () => {
@@ -210,7 +219,10 @@ const showModalModule = () => {
 const getWorkCategories = async () => {
   if (!userIsConnected()) return;
 
-  const categories = await API(ENDPOINTS.CATEGORY, HTTP_VERB.GET);
+  const categories = await API({
+    url: ENDPOINTS.CATEGORY,
+    method: HTTP_VERB.GET,
+  });
 
   //récupère le menu déroulant pour les catégories
   const categoriesSelect = document.getElementById("category");

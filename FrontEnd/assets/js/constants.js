@@ -28,7 +28,7 @@ const WORK_CATEGORY = {
 /* UTILS */
 
 // Fonction utilitaire pour envoyer une requête à l'API
-const API = async (url, method, headers, body) => {
+const API = async ({ url, method, headers, body, errorMessage }) => {
   try {
     const response = await fetch(url, {
       method, // Utilisation de la méthode HTTP passée en paramètre
@@ -37,9 +37,7 @@ const API = async (url, method, headers, body) => {
     });
 
     if (!response.ok) {
-      throw new Error(
-        `HTTP error: ${response.status} - ${response.statusText}`
-      );
+      throw new Error(errorMessage ?? "Une erreur est survenue");
     }
 
     return response.json(); // Renvoie la réponse sous forme de JSON

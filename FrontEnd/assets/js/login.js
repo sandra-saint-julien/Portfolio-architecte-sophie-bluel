@@ -16,15 +16,16 @@ const loginModule = async () => {
       };
 
       // Envoi de la requête d'authentification à l'API avec les données de connexion
-      const response = await API(
-        ENDPOINTS.LOGIN, // Utilisation de l'endpoint LOGIN
-        HTTP_VERB.POST, // Utilisation de la méthode POST
-        headers, // Utilisation des en-têtes configurés
-        JSON.stringify({
+      const response = await API({
+        url: ENDPOINTS.LOGIN, // Utilisation de l'endpoint LOGIN
+        method: HTTP_VERB.POST, // Utilisation de la méthode POST
+        headers: headers, // Utilisation des en-têtes configurés
+        body: JSON.stringify({
           email,
           password,
-        }) // Corps de la requête contenant les données de connexion
-      );
+        }), // Corps de la requête contenant les données de connexion
+        errorMessage: "Vérifiez votre mail ou votre mot de passe",
+      });
 
       const token = response.token; // Récupération du jeton d'authentification dans la réponse
 
