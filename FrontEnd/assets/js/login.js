@@ -27,15 +27,15 @@ const loginModule = async () => {
         errorMessage: "Vérifiez votre mail ou votre mot de passe",
       });
 
-      const token = response.token; // Récupération du jeton d'authentification dans la réponse
+      const token = response?.token; // Récupération du jeton d'authentification dans la réponse
 
-      // Stockage du jeton dans le stockage local du navigateur
-      localStorage.setItem("accessToken", token);
+      if (token) {
+        // Stockage du jeton dans le stockage local du navigateur
+        localStorage.setItem("accessToken", token);
 
-      // Redirection de l'utilisateur vers la page d'accueil
-      window.location.href = `http://${window.location.hostname}:5500/FrontEnd/index.html`;
-
-      console.log("Connexion réussie !"); // Message de succès dans la console
+        // Redirection de l'utilisateur vers la page d'accueil
+        window.location.href = `http://${window.location.hostname}:5500/FrontEnd/index.html`;
+      }
     });
 };
 
